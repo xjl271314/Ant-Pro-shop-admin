@@ -188,3 +188,35 @@ export function digitToFixed(num, dig) {
     return parseFloat(num).toFixed(digit);
   }
 }
+
+// 添加本地对象存储
+export function addObjStorage(key, obj) {
+  let value = JSON.stringify(obj);
+  localStorage.setItem(key, value);
+}
+//获取本地对象存储
+export function getObjStorage(key) {
+  let obj = localStorage.getItem(key);
+  return JSON.parse(obj);
+}
+// 添加本地存储
+export function addStorage(key, value) {
+  localStorage.setItem(key, value);
+}
+// 获取本地存储
+export function getStorage(key) {
+  return localStorage.getItem(key);
+}
+// 删除本地存储指定的值
+export function deloneStorage(key) {
+  return new Promise((resolve, reject) => {
+    localStorage.removeItem(key);
+  });
+}
+// 删除所有本地存储的值
+export function delAllStorage(key) {
+  return new Promise((resolve, reject) => {
+    localStorage.clear();
+    resolve('success');
+  });
+}

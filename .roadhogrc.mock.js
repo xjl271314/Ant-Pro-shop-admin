@@ -8,7 +8,9 @@ import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
 
 // 是否禁用代理
-const noProxy = process.env.NO_PROXY === 'true';
+// const noProxy = process.env.NO_PROXY === 'true';
+
+const noProxy = true;
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
@@ -139,7 +141,7 @@ const proxy = {
 
 export default (noProxy
   ? {
-      'GET /api/(.*)': 'http://192.168.100.185:3100/api/',
-      'POST /api/(.*)': 'http://192.168.100.185:3100/api/',
+      'GET /api/(.*)': 'http://192.168.110.173:3001/api/',
+      'POST /api/(.*)': 'http://192.168.110.173:3001/api/',
     }
   : delay(proxy, 1000));

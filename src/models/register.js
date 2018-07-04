@@ -1,39 +1,16 @@
 import { fakeRegister } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
-import { register, getCaptcha} from '../services/user';
-import md5 from 'md5'
+import { register, getCaptcha } from '../services/user';
+import md5 from 'md5';
 
 export default {
   namespace: 'register',
 
   state: {
     status: undefined,
-    captcha: ''
+    captcha: '',
   },
-
-  effects: {
-    *getCaptcha(_, { call, put }) {
-      const response = yield call(getCaptcha);
-      // Login successfully
-
-      if (response.success) {
-        yield put({
-          type: 'registerCaptcha',
-          payload: response.object,
-        });
-      }
-    },
-    *submit({ payload }, { call, put }) {
-      payload.password = md5(payload.password)
-      const response = yield call(register, payload);
-      yield put({
-        type: 'registerHandle',
-        payload: response,
-      });
-    },
-  },
-
   reducers: {
     registerHandle(state, { payload }) {
       setAuthority('user');
@@ -43,11 +20,34 @@ export default {
         status: payload.status,
       };
     },
-    registerCaptcha(state, {payload}) {
-      return {
-        ...state,
-        captcha: payload
+    save_data(state, action) {
+      return Object.assign({}, state, action);
+    },
+  },
+  effects: {
+    //获取验证码
+    *getCaptcha(_, { call, put }) {
+      const result = yield call(getCaptcha);
+      yield put({
+        type: 'save_data',
+        captcha: result.data,
+      });
+    },
+    //提交注册请求
+    *submit({ payload }, { call, put }) {
+      payload.password = md5(payload.password);
+      payload.confirmPassword = md5(payload.confirmPassword);
+      const response = yield call(register, payload);
+      if (response) {
+        yield put({
+          type: 'registerHandle',
+          payload: response,
+        });
+      } else {
+        yield put({
+          type: 'getCaptcha',
+        });
       }
-    }
+    },
   },
 };

@@ -3,44 +3,61 @@ import { fakeAccountLogin } from '../services/api';
 import { login, register, getCaptcha, logOut } from '../services/user';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
-import md5 from 'md5'
+import { addStorage, delAllStorage } from '../utils/utils';
+import md5 from 'md5';
 
 export default {
   namespace: 'login',
 
   state: {
     status: undefined,
-    captcha: ''
+    captcha: '',
   },
-
+  reducers: {
+    changeLoginStatus(state, { payload }) {
+      setAuthority(payload.currentAuthority);
+      return {
+        ...state,
+        status: payload.status,
+        type: payload.type,
+      };
+    },
+    save_data(state, action) {
+      return Object.assign({}, state, action);
+    },
+  },
   effects: {
-    *getCaptcha(_, { call, put }) {
-      const response = yield call(getCaptcha);
-      // Login successfully
-
-      if (response.success) {
-        yield put({
-          type: 'loginCaptcha',
-          payload: response.object,
-        });
-      }
+    // 获取验证码
+    *getCaptcha(action, { call, put }) {
+      const result = yield call(getCaptcha);
+      yield put({
+        type: 'save_data',
+        captcha: result.data,
+      });
     },
     *login({ payload }, { call, put }) {
-      payload.password = md5(payload.password)
+      payload.password = md5(payload.password);
       const response = yield call(login, payload);
+      console.log(response);
       // Login successfully
       if (response.success) {
-        response.status = 'ok'
-        response.type = 'account'
-        response.currentAuthority = response.object.role
-
+        response.status = 'ok';
+        response.type = 'account';
+        response.currentAuthority = response.data.role == 2 ? 'admin' : 'user';
+        //保存session
+        addStorage('token', response.data.token);
         yield put({
           type: 'changeLoginStatus',
           payload: response,
         });
         reloadAuthorized();
-        
-        yield put(routerRedux.push('/'));
+
+        yield put(routerRedux.push('/dashboard/analysis'));
+
+        //15分钟后清除token及其他本地存储
+        setTimeout(() => {
+          delAllStorage();
+        }, 15 * 60 * 1000);
       }
     },
     *logout(_, { put, select, call }) {
@@ -64,22 +81,5 @@ export default {
         yield put(routerRedux.push('/user/login'));
       }
     },
-  },
-
-  reducers: {
-    changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
-      return {
-        ...state,
-        status: payload.status,
-        type: payload.type,
-      };
-    },
-    loginCaptcha(state, {payload}) {
-      return {
-        ...state,
-        captcha: payload
-      }
-    }
   },
 };

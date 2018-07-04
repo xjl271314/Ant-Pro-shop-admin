@@ -32,6 +32,7 @@ export default class Register extends Component {
     visible: false,
     help: '',
     prefix: '86',
+    showPassWordTip: false,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -47,28 +48,16 @@ export default class Register extends Component {
       );
     }
   }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   componentDidMount = () => {
     this.props.dispatch({
-      type: 'register/getCaptcha'
+      type: 'register/getCaptcha',
     });
-  }
-  
+  };
 
   onGetCaptcha = () => {
-    let count = 59;
-    this.setState({ count });
-    this.interval = setInterval(() => {
-      count -= 1;
-      this.setState({ count });
-      if (count === 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
+    this.props.dispatch({
+      type: 'register/getCaptcha',
+    });
   };
 
   getPasswordStatus = () => {
@@ -103,6 +92,7 @@ export default class Register extends Component {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
+  //密码检验
   checkConfirm = (rule, value, callback) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
@@ -150,7 +140,7 @@ export default class Register extends Component {
     const { form } = this.props;
     const value = form.getFieldValue('password');
     const passwordStatus = this.getPasswordStatus();
-    return value && value.length ? (
+    return value && value.length && this.state.showPassWordTip ? (
       <div className={styles[`progress-${passwordStatus}`]}>
         <Progress
           status={passwordProgressMap[passwordStatus]}
@@ -167,8 +157,8 @@ export default class Register extends Component {
     const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
     const { count, prefix } = this.state;
-    const { captcha } = this.props.register
-    
+    const { captcha } = this.props.register;
+
     return (
       <div className={styles.main}>
         <h3>注册</h3>
@@ -187,13 +177,14 @@ export default class Register extends Component {
               ],
             })(<Input size="large" placeholder="邮箱" />)}
           </FormItem>
+
           <FormItem>
-            {getFieldDecorator('nickName', {
+            {getFieldDecorator('userName', {
               rules: [
                 {
                   required: true,
                   message: '请输入昵称',
-                }
+                },
               ],
             })(<Input size="large" placeholder="昵称" />)}
           </FormItem>
@@ -202,7 +193,7 @@ export default class Register extends Component {
               content={
                 <div style={{ padding: '4px 0' }}>
                   {passwordStatusMap[this.getPasswordStatus()]}
-                  {this.renderPasswordProgress()}
+                  {/* {this.renderPasswordProgress()} */}
                   <div style={{ marginTop: 10 }}>
                     请至少输入 6 个字符。请不要使用容易被猜到的密码。
                   </div>
@@ -222,7 +213,7 @@ export default class Register extends Component {
             </Popover>
           </FormItem>
           <FormItem>
-            {getFieldDecorator('confirm', {
+            {getFieldDecorator('confirmPassword', {
               rules: [
                 {
                   required: true,
@@ -251,11 +242,10 @@ export default class Register extends Component {
                   size="large"
                   disabled={count}
                   className={styles.getCaptcha}
-                  style={{backgroundColor: '#fff', height: '40px'}}
+                  style={{ backgroundColor: '#fff', height: '40px' }}
                   onClick={this.onGetCaptcha}
-                  dangerouslySetInnerHTML={{__html: captcha}}
-                >
-                </div>
+                  dangerouslySetInnerHTML={{ __html: captcha }}
+                />
               </Col>
             </Row>
           </FormItem>

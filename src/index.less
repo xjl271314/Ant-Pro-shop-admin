@@ -23,9 +23,19 @@ body {
   margin: 40px 0 !important;
 }
 
-// temp fix for https://github.com/ant-design/ant-design/commit/a1fafb5b727b62cb0be29ce6e9eca8f579d4f8b7
+// 处理ant默认样式
 :global {
   .ant-spin-container {
     overflow: visible !important;
+  }
+}
+
+//处理webkit内核input自动填充变黄
+:global {
+  input:-webkit-autofill {
+    background-color: #fff;
+    box-shadow: 0 0 1000px 1000px #fff inset;
+    background-image: none;
+    color: #000;
   }
 }

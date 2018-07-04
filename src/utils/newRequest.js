@@ -8,13 +8,13 @@ export default async function newRequest(url, options) {
     res = await request(url, options);
     if (res && res.code == 1) {
       return res;
-    } else if (res && res.code != 1) {
+    } else if (res && res.code != 1 && res.message != '') {
       message.error(res.message);
       return false;
     }
   } catch (err) {
     console.log(err.message);
-    // message.error(err);
+    throw err;
     return false;
   }
 }

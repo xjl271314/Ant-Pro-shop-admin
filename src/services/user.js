@@ -2,17 +2,19 @@ import request from '../utils/request';
 import { stringify } from 'qs';
 import newRequest from './../utils/newRequest';
 
+//获取所有用户
 export async function query() {
   return request('/api/users');
 }
 
+//获取当前用户
 export async function queryCurrent() {
-  return request('/api/user/getUserInfo');
+  return newRequest('/api/user/getUserInfo');
 }
 
 // 用户登录
 export async function login(params) {
-  return newRequest('/api/user/login', {
+  return newRequest('/api/user/signIn', {
     method: 'POST',
     body: {
       ...params,
@@ -23,7 +25,7 @@ export async function login(params) {
 
 // 用户注册
 export async function register(params) {
-  return request('/api/user/register', {
+  return newRequest('/api/user/signUp', {
     method: 'POST',
     body: {
       ...params,
@@ -32,7 +34,7 @@ export async function register(params) {
   });
 }
 
-// 用户注册获取验证码
+// 用户注册|登录获取验证码
 export async function getCaptcha() {
   return request('/api/user/getCaptcha');
 }

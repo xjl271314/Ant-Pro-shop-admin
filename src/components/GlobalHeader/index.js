@@ -95,11 +95,17 @@ export default class GlobalHeader extends PureComponent {
           onClick={this.toggle}
         />
         <div className={styles.right}>
-          {currentUser.nickName ? (
+          {currentUser.userName ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} style={{backgroundColor: '#eee'}} src={currentUser.avatar}  icon="user"/>
-                <span className={styles.name}>{currentUser.nickName}</span>
+                <Avatar
+                  size="small"
+                  className={styles.avatar}
+                  style={{ backgroundColor: '#eee' }}
+                  src={currentUser.avatar}
+                  icon="user"
+                />
+                <span className={styles.name}>{currentUser.userName}</span>
               </span>
             </Dropdown>
           ) : (

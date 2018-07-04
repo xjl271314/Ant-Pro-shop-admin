@@ -12,7 +12,7 @@ import GlobalHeader from '../components/GlobalHeader';
 import GlobalFooter from '../components/GlobalFooter';
 import SiderMenu from '../components/SiderMenu';
 import NotFound from '../routes/Exception/404';
-import { getRoutes } from '../utils/utils';
+import { getRoutes, getStorage } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.svg';
@@ -105,9 +105,14 @@ class BasicLayout extends React.PureComponent {
         isMobile: mobile,
       });
     });
-    this.props.dispatch({
-      type: 'user/fetchCurrent',
-    });
+    //判断是否有存储token 否则重定向到登陆页
+    if (getStorage('token')) {
+      this.props.dispatch({
+        type: 'user/fetchCurrent',
+      });
+    } else {
+      this.props.dispatch(routerRedux.push('/user/login'));
+    }
   }
   componentWillUnmount() {
     unenquireScreen(this.enquireHandler);

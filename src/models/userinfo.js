@@ -13,14 +13,6 @@ export default {
     },
   },
   effects: {
-    //赋值
-    // *changeValue({ item, val }, { select, put }) {
-    //     const item = yield select(state => state.userinfo[item]);
-    //     yield put({
-    //         type: 'save_data',
-    //         [item]: val
-    //     })
-    // },
     //获取用户列表
     *getUserApplyList(action, { select, call, put }) {
       let res = yield call(userApplyList);

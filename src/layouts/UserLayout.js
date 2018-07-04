@@ -6,6 +6,7 @@ import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
 import logo from '../assets/logo.svg';
 import { getRoutes } from '../utils/utils';
+import AppConfig from '../AppConfig';
 
 const links = [
   {
@@ -50,7 +51,7 @@ class UserLayout extends React.PureComponent {
             <div className={styles.top} style={{ marginBottom: '20px' }}>
               <div className={styles.header}>
                 <Link to="/">
-                  <span className={styles.title}>备胎信用App数据</span>
+                  <span className={styles.title}>{AppConfig.LoginTitle}</span>
                 </Link>
               </div>
             </div>
@@ -66,7 +67,7 @@ class UserLayout extends React.PureComponent {
               <Redirect exact from="/user" to="/user/login" />
             </Switch>
           </div>
-          {/* <GlobalFooter links={links} copyright={copyright} /> */}
+          <GlobalFooter links={links} copyright={copyright} />
         </div>
       </DocumentTitle>
     );

@@ -67,10 +67,14 @@ function getFlatMenuData(menus) {
   return keys;
 }
 
+//页面级路由入口
 export const getRouterData = app => {
   const routerConfig = {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
+    },
+    '/index': {
+      component: dynamicWrapper(app, [], () => import('../layouts/BasicLayout')),
     },
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
@@ -87,9 +91,9 @@ export const getRouterData = app => {
       component: dynamicWrapper(app, ['project', 'activities', 'chart'], () =>
         import('../routes/Dashboard/Workplace')
       ),
-      // hideInBreadcrumb: true,
-      // name: '工作台',
-      // authority: 'admin',
+      hideInBreadcrumb: true,
+      name: '工作台',
+      authority: 'admin',
     },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
