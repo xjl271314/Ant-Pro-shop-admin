@@ -233,15 +233,15 @@ export function constructSortData(dataSource) {
       a.push({
         label: element.catName,
         value: element.catId,
-        children: []
-      })
+        children: [],
+      });
     });
-    //一级分类数据去重 
+    //一级分类数据去重
     let objA = {};
-    a = a.reduce(function (item, next) {
-      objA[next.value] ? '' : objA[next.value] = true && item.push(next);
-      return item
-    }, [])
+    a = a.reduce(function(item, next) {
+      objA[next.value] ? '' : (objA[next.value] = true && item.push(next));
+      return item;
+    }, []);
     //构造二级数据
     dataSource.forEach((element, index) => {
       a.forEach((item, i) => {
@@ -249,18 +249,18 @@ export function constructSortData(dataSource) {
           b = item.children.push({
             label: element.brandName,
             value: element.brandId,
-            children: []
-          })
+            children: [],
+          });
         }
-      })
+      });
       objA = {};
       a.forEach((item, i) => {
-        item.children = item.children.reduce(function (item, next) {
-          objA[next.value] ? '' : objA[next.value] = true && item.push(next);
-          return item
-        }, [])
-      })
-    })
+        item.children = item.children.reduce(function(item, next) {
+          objA[next.value] ? '' : (objA[next.value] = true && item.push(next));
+          return item;
+        }, []);
+      });
+    });
     //构造三级数据
     dataSource.forEach((element, index) => {
       a.forEach((aitem, i) => {
@@ -269,12 +269,12 @@ export function constructSortData(dataSource) {
             c = item.children.push({
               label: element.sortName,
               value: element.sortId,
-            })
+            });
           }
-        })
-      })
-    })
-    return a
+        });
+      });
+    });
+    return a;
   }
 }
 

@@ -4,7 +4,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Link } from 'dva/router';
 import styles from './index.less';
 import { urlToList } from '../_utils/pathTools';
-import AppConfig from '../../AppConfig'
+import AppConfig from '../../AppConfig';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;

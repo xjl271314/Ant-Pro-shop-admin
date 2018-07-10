@@ -2,15 +2,15 @@ import { isUrl } from '../utils/utils';
 
 const menuData = [
   {
-    name:'商品管理',
-    icon:'dashboard',
-    path:'goods-manage',
-    children:[
+    name: '商品管理',
+    icon: 'dashboard',
+    path: 'goods-manage',
+    children: [
       {
-        name:'添加产品',
-        path:'add-goods'
-      }
-    ]
+        name: '添加产品',
+        path: 'add-goods',
+      },
+    ],
   },
   // {
   //   name: 'dashboard',
