@@ -220,3 +220,67 @@ export function delAllStorage(key) {
     resolve('success');
   });
 }
+
+//构造分类数据
+export function constructSortData(dataSource) {
+  let a = [];
+  let b = [];
+  let c = [];
+  // console.log('源数据', dataSource)
+  if (dataSource && dataSource.length > 0) {
+    //构造一级分类数据
+    dataSource.forEach((element, index) => {
+      a.push({
+        label: element.catName,
+        value: element.catId,
+        children: []
+      })
+    });
+    //一级分类数据去重 
+    let objA = {};
+    a = a.reduce(function (item, next) {
+      objA[next.value] ? '' : objA[next.value] = true && item.push(next);
+      return item
+    }, [])
+    //构造二级数据
+    dataSource.forEach((element, index) => {
+      a.forEach((item, i) => {
+        if (element.parentId == item.value) {
+          b = item.children.push({
+            label: element.brandName,
+            value: element.brandId,
+            children: []
+          })
+        }
+      })
+      objA = {};
+      a.forEach((item, i) => {
+        item.children = item.children.reduce(function (item, next) {
+          objA[next.value] ? '' : objA[next.value] = true && item.push(next);
+          return item
+        }, [])
+      })
+    })
+    //构造三级数据
+    dataSource.forEach((element, index) => {
+      a.forEach((aitem, i) => {
+        aitem.children.forEach((item, i) => {
+          if (element.brandId == item.value) {
+            c = item.children.push({
+              label: element.sortName,
+              value: element.sortId,
+            })
+          }
+        })
+      })
+    })
+    return a
+  }
+}
+
+//图片转化为base64
+export function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}

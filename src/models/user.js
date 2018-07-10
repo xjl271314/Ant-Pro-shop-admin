@@ -1,5 +1,6 @@
 import { query as queryUsers, queryCurrent } from '../services/user';
-
+import { routerRedux } from 'dva/router';
+import { delAllStorage } from '../utils/utils'
 export default {
   namespace: 'user',
 
@@ -18,11 +19,16 @@ export default {
     },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-      console.log(response);
-      yield put({
-        type: 'save_data',
-        currentUser: response.data,
-      });
+      if (response) {
+        yield put({
+          type: 'save_data',
+          currentUser: response.data,
+        });
+      }
+      else{
+        delAllStorage();
+        yield put(routerRedux.push('/user/login'));
+      }
     },
   },
 

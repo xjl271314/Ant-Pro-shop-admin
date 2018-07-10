@@ -38,7 +38,6 @@ export default {
     *login({ payload }, { call, put }) {
       payload.password = md5(payload.password);
       const response = yield call(login, payload);
-      console.log(response);
       // Login successfully
       if (response.success) {
         response.status = 'ok';
@@ -52,12 +51,12 @@ export default {
         });
         reloadAuthorized();
 
-        yield put(routerRedux.push('/dashboard/analysis'));
+        yield put(routerRedux.push('/goods-manage/add-goods'));
 
         //15分钟后清除token及其他本地存储
-        setTimeout(() => {
-          delAllStorage();
-        }, 15 * 60 * 1000);
+        // setTimeout(() => {
+        //   delAllStorage();
+        // }, 15 * 60 * 1000);
       }
     },
     *logout(_, { put, select, call }) {
@@ -77,6 +76,7 @@ export default {
             currentAuthority: 'guest',
           },
         });
+        delAllStorage();
         reloadAuthorized();
         yield put(routerRedux.push('/user/login'));
       }

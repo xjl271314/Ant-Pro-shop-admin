@@ -7,6 +7,7 @@ export default async function newRequest(url, options) {
   try {
     res = await request(url, options);
     if (res && res.code == 1) {
+      // message.success(res.message);
       return res;
     } else if (res && res.code != 1 && res.message != '') {
       message.error(res.message);

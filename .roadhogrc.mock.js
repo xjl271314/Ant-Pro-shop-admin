@@ -141,7 +141,9 @@ const proxy = {
 
 export default (noProxy
   ? {
-      'GET /api/(.*)': 'http://192.168.110.173:3001/api/',
-      'POST /api/(.*)': 'http://192.168.110.173:3001/api/',
+      // 'GET /api/(.*)': 'http://192.168.110.173:3001/api/',
+      // 'POST /api/(.*)': 'http://192.168.110.173:3001/api/',
+      'GET /api/(.*)': 'http://localhost:3001/api/',
+      'POST /api/(.*)': 'http://localhost:3001/api/',
     }
   : delay(proxy, 1000));

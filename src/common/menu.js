@@ -2,26 +2,37 @@ import { isUrl } from '../utils/utils';
 
 const menuData = [
   {
-    name: 'dashboard',
-    icon: 'dashboard',
-    path: 'dashboard',
-    children: [
+    name:'商品管理',
+    icon:'dashboard',
+    path:'goods-manage',
+    children:[
       {
-        name: '分析页',
-        path: 'analysis',
-      },
-      {
-        name: '监控页',
-        path: 'monitor',
-      },
-      {
-        name: '工作台',
-        path: 'workplace',
-        // hideInBreadcrumb: true,
-        // hideInMenu: true,
-      },
-    ],
+        name:'添加产品',
+        path:'add-goods'
+      }
+    ]
   },
+  // {
+  //   name: 'dashboard',
+  //   icon: 'dashboard',
+  //   path: 'dashboard',
+  //   children: [
+  //     {
+  //       name: '分析页',
+  //       path: 'analysis',
+  //     },
+  //     {
+  //       name: '监控页',
+  //       path: 'monitor',
+  //     },
+  //     {
+  //       name: '工作台',
+  //       path: 'workplace',
+  //       // hideInBreadcrumb: true,
+  //       // hideInMenu: true,
+  //     },
+  //   ],
+  // },
   {
     name: '表单页',
     icon: 'form',
