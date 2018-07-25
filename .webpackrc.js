@@ -8,6 +8,19 @@ export default {
       extraBabelPlugins: ['dva-hmr'],
     },
   },
+  //代理文件上传
+  proxy: {
+    '/api/goods/upload/*': {
+      target: 'http://localhost:3001/',
+      changeOrigin: true,
+      pathRewrite: { '^/api/goods/upload/': '' },
+    },
+    '/api/upload/*': {
+      target: 'http://localhost:3001/',
+      changeOrigin: true,
+      pathRewrite: { '^/api/upload/': '' },
+    },
+  },
   alias: {
     components: path.resolve(__dirname, 'src/components/'),
   },

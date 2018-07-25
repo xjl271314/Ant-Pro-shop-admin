@@ -10,6 +10,10 @@ const menuData = [
         name: '添加产品',
         path: 'add-goods',
       },
+      {
+        name: '商品列表',
+        path: 'goods-list',
+      },
     ],
   },
   // {

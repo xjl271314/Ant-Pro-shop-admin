@@ -1,5 +1,54 @@
 @import '~antd/lib/style/themes/default.less';
-
+@import './../../utils/utils.less';
 .AddGoodsContainer {
   background-color: #fff;
+}
+
+.colors {
+  :global {
+    .ant-form-item-label {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      .dashBorder;
+      text-align: left;
+    }
+  }
+}
+
+.manage {
+  padding: 0 8px;
+  display: block;
+  color: @hoverColorMain;
+  float: right;
+  cursor: pointer;
+  border: 1px dashed transparent;
+  &:hover {
+    border: 1px dashed @hoverColorMainActive;
+  }
+}
+
+.sizeAdd {
+  padding: 0 8px;
+  display: inline-block;
+  color: @hoverColorMain;
+  cursor: pointer;
+  border: 1px dashed transparent;
+  &:hover {
+    border: 1px dashed @hoverColorMainActive;
+  }
+}
+
+.sizeInput {
+  display: inline-block;
+  outline: none;
+  border: 1px solid transparent;
+  padding: 2px;
+  width: 8em;
+  height: 20px;
+  font-size: 12px;
+  position: relative;
+  top: -1px;
+  &:focus {
+    border-color: #e5e5e5;
+  }
 }

@@ -1,3 +1,4 @@
+@import 'utils/utils.less';
 html,
 body,
 :global(#root) {
@@ -37,5 +38,23 @@ body {
     box-shadow: 0 0 1000px 1000px #fff inset;
     background-image: none;
     color: #000;
+  }
+}
+
+:global {
+  //处理所有span表现形式为A标签
+  .span-a-normal {
+    color: @hoverColorMain;
+    cursor: pointer;
+    &:hover {
+      color: @hoverColorMainActive;
+    }
+  }
+  .span-a-attention {
+    color: @hoverColorAttention;
+    cursor: pointer;
+    &:hover {
+      color: @hoverColorAttentionActive;
+    }
   }
 }

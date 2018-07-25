@@ -284,3 +284,36 @@ export function getBase64(img, callback) {
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
+
+/**
+ *
+ * @param {*String} sn       //商品编码
+ * @param {*String} weight   //商品净含量
+ * @param {*String} unit     //商品规格单位
+ * @param {*String} type     //商品包装形式
+ */
+const unitState = {
+  克: 0,
+  千克: 1,
+  公斤: 1,
+  毫克: 2,
+  毫升: 3,
+  升: 4,
+};
+const typeState = {
+  瓶: 0,
+  罐: 1,
+  箱: 2,
+  袋: 3,
+  包: 4,
+  打: 5,
+  盒: 6,
+  件: 7,
+  条: 8,
+};
+export function constructSku(sn, weight, unit, type) {
+  unit = unitState[unit] || 5;
+  type = typeState[type] || 9;
+
+  return sn + weight + unit + type;
+}

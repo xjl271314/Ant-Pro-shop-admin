@@ -30,3 +30,47 @@ export async function uploadImageAPI(params) {
     },
   });
 }
+
+//新增商品信息基础版本
+export async function addGoodsInfoAPI(params) {
+  return newRequest('/api/goods/addGoods', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
+//获取我的所有商品信息列表
+export async function getGoodsListAPI(params) {
+  return newRequest('/api/goods/getList', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
+//删除指定商品
+export async function deleteGoodsAPI(params) {
+  return newRequest('/api/goods/delete', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
+//修改指定商品上下架状态
+export async function changeSaleStateAPI(params) {
+  return newRequest('/api/goods/changeState', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}

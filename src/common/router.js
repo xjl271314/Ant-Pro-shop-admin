@@ -79,8 +79,16 @@ export const getRouterData = app => {
     '/goods-manage/add-goods': {
       component: dynamicWrapper(app, ['goods'], () => import('../routes/GoodsManage/AddGoods')),
     },
+    '/goods-manage/goods-list': {
+      component: dynamicWrapper(app, ['goods'], () => import('../routes/GoodsManage/GoodsList')),
+    },
     '/goods-manage/goodsinfo-edit': {
       component: dynamicWrapper(app, ['goods'], () => import('../routes/GoodsManage/AddGoodsInfo')),
+    },
+    '/goods-manage/goodsinfo-result': {
+      component: dynamicWrapper(app, ['goods'], () =>
+        import('../routes/GoodsManage/AddGoodsResult')
+      ),
     },
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
